@@ -19,7 +19,6 @@ function getRandomUnicInt(min, max){
     (количество элементов хранилища не должно превышать
     число max из задонного диапазона ) */
     if (previousValues.length >= (max - min + 1)) {
-      console.error('Перебраны все числа из диапазона от ' + min + ' до ' + max);
       return null;
     }
 
@@ -34,8 +33,7 @@ function getRandomUnicInt(min, max){
     previousValues.push(currentInt);
     /* Вернет уникальное случайное значение */
     return currentInt;
-  }
-
+  };
 }
 
-export {getRandomUnicInt};
+export {getRandomUnicInt, getRandomInt};
