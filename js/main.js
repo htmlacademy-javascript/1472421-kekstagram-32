@@ -1,5 +1,5 @@
-import { getUserPostData } from "./mocks";
+import { getUserPostData } from './mocks';
 
 const userPostData = getUserPostData();
 
-console.log(userPostData)
+console.log(userPostData);
