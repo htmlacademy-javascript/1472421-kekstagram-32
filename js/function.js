@@ -37,4 +37,58 @@ const genNumber = (str) => {
 genNumber('fwefw 222 dfs 3');
 genNumber(231);
 
+/* Принимает время преобразуя его в объект со свойствами часы и минуты */
+function getTimeObj(inputTime){
+  return {
+    hours: +inputTime.split(':')[0],
+    minute: +inputTime.split(':')[1]
+  };
+}
 
+/* Конвертирует минуты в объект со свойствами часы и минуты */
+function convertMinuteToTime(minute){
+  return {
+    hours: +`${minute / 60}`.split('.')[0],
+    minute: minute % 60
+  };
+}
+
+/* Определяет время окончания встречи, возвращая объект со свойствами часы и минуты */
+function endMeetTime(time, duration){
+  let concatTimeObj;
+  const {hours: timeHours, minute: timeMinute} = getTimeObj(time);
+  const {hours: durationHours, minute: durationMinute} = convertMinuteToTime(duration);
+  if(timeMinute + durationMinute >= 60){
+    concatTimeObj = {
+      hours: +(`${((timeMinute + durationMinute) / 60)}`.split('.')[0]) + timeHours + durationHours,
+      minute: (timeMinute + durationMinute) % 60
+    };
+  } else{
+    concatTimeObj = {
+      hours: timeHours + durationHours,
+      minute: (timeMinute + durationMinute) % 60
+    };
+  }
+  return concatTimeObj;
+
+}
+
+
+/* Проверяет выходит ли встреча за рамки рабочего дня */
+function checkDurationMeet(startWorkDayTime, endWorkDayTime, startMeet, durationMeet) {
+
+  const {hours: endMeetHours, minute: endMeetMinute} = endMeetTime(startMeet, durationMeet);
+  const {hours: startWorkDayHours, minute: startWorkDayMinute} = getTimeObj(startWorkDayTime);
+  const {hours: endWorkDayHours, minute: endWorkDayMinute} = getTimeObj(endWorkDayTime);
+  const {hours: startMeetHours, minute: startMeetMinute} = getTimeObj(startMeet);
+
+  if(startMeetHours < startWorkDayHours || (startMeetHours === startWorkDayHours && startMeetMinute < startWorkDayMinute)){
+    return false;
+  }
+
+  if(endMeetHours < endWorkDayHours || (endMeetHours === endWorkDayHours && endMeetMinute <= endWorkDayMinute)){
+    return true;
+  }
+
+  return false;
+}
