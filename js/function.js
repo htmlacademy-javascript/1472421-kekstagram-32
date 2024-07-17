@@ -92,3 +92,5 @@ function checkDurationMeet(startWorkDayTime, endWorkDayTime, startMeet, duration
 
   return false;
 }
+
+export {checkDurationMeet};
