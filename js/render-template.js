@@ -1,22 +1,29 @@
 import { getUserPostData } from './mocks';
 
-const userPosts = getUserPostData();
+const userPostsData = getUserPostData();
 const userPostsContainer = document.querySelector('.pictures');
+const userPorsTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-function getUserPostTemplate(userPostsData) {
-  return `<a href="#" class="picture">
-            <img class="picture__img" src="${userPostsData.url}" width="182" height="182" alt="${userPostsData.description}">
-            <p class="picture__info">
-              <span class="picture__comments">${userPostsData.comments.length}</span>
-              <span class="picture__likes">${userPostsData.likes}</span>
-            </p>
-          </a>`;
+function getUserPostTemplates(postsData, template) {
+
+  const templateContainer = document.createDocumentFragment();
+
+  postsData.forEach((element) => {
+    const templateClone = template.cloneNode(true);
+
+    templateClone.querySelector('.picture__img').src = element.url;
+    templateClone.querySelector('.picture__img').alt = element.description;
+    templateClone.querySelector('.picture__comments').textContent = element.comments.length;
+    templateClone.querySelector('.picture__likes').textContent = element.likes;
+
+    templateContainer.append(templateClone);
+  });
+
+  return templateContainer;
 }
 
 function renderPosts() {
-  userPosts.forEach((element) => {
-    userPostsContainer.insertAdjacentHTML('beforeend', getUserPostTemplate(element));
-  });
+  userPostsContainer.append(getUserPostTemplates(userPostsData, userPorsTemplate));
 }
 
 export {renderPosts};
