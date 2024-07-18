@@ -1,5 +1,5 @@
-import { getUserPostData } from './mocks';
+import { renderPosts } from './render-template';
 
-const userPostData = getUserPostData();
+renderPosts();
 
-console.log(userPostData);
+

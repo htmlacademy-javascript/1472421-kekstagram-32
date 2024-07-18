@@ -59,4 +59,4 @@ function getUserPostData(){
   return Array.from({length: QUNTITY_POST}, getUserPost);
 }
 
-export {NAME, MESSAGE, DESCRIPTION_PHOTOS, getUserPostData};
+export {getUserPostData};
