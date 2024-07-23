@@ -50,12 +50,26 @@ function closeClickHandler(evt) {
   }
 }
 
+/* По нажатию Esc найдет открытый попап
+(элемент с классом ) popup-open скроет его и убирет этот класс*/
+function keydownHandler(evt){
+  if(evt.key === 'Escape'){
+    document.querySelector('.popup-open').classList.add('hidden');
+    document.querySelector('.popup-open').classList.remove('popup-open');
+    document.removeEventListener('keydown', keydownHandler);
+  }
+}
+
 
 /* Выполнит рендер любого попапа и повесит на него слушатель события клика по кнопке закрытия */
 function openPopup(date, element, renderPopup){
   document.querySelector('body').classList.add('modal-open');
+
   renderPopup(date, element);
+  element.classList.add('popup-open');
+
   element.addEventListener('click', closeClickHandler);
+  document.addEventListener('keydown', keydownHandler);
 }
 
 export {getRandomUnicInt, getRandomInt, findById, openPopup};
