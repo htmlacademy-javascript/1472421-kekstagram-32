@@ -1,16 +1,14 @@
-import { getUserPostData } from './mocks';
-
-const userPostsData = getUserPostData();
 const userPostsContainer = document.querySelector('.pictures');
-const userPorsTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const userPostsTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-function getUserPostTemplates(postsData, template) {
+function getMiniaturePostsTemplates(postsData, template) {
 
   const templateContainer = document.createDocumentFragment();
 
   postsData.forEach((element) => {
     const templateClone = template.cloneNode(true);
 
+    templateClone.querySelector('.picture__img').id = element.id;
     templateClone.querySelector('.picture__img').src = element.url;
     templateClone.querySelector('.picture__img').alt = element.description;
     templateClone.querySelector('.picture__comments').textContent = element.comments.length;
@@ -22,8 +20,8 @@ function getUserPostTemplates(postsData, template) {
   return templateContainer;
 }
 
-function renderPosts() {
-  userPostsContainer.append(getUserPostTemplates(userPostsData, userPorsTemplate));
+function renderMiniaturePosts(userPostsData) {
+  userPostsContainer.append(getMiniaturePostsTemplates(userPostsData, userPostsTemplate));
 }
 
-export {renderPosts};
+export {renderMiniaturePosts};

@@ -36,4 +36,15 @@ function getRandomUnicInt(min, max){
   };
 }
 
-export {getRandomUnicInt, getRandomInt};
+/* Функция поиска объекта по id в массиве объектов */
+function findById(arr, id) {
+  return arr.find((element) => element.id === id);
+}
+
+
+/* Выполнит рендер попапа любого попапа */
+function openPopup(date, element, renderPopup){
+  renderPopup(date, element);
+}
+
+export {getRandomUnicInt, getRandomInt, findById, openPopup};

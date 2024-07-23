@@ -20,7 +20,6 @@ const DESCRIPTION_PHOTOS = [
 
 
 const uniceIdPhoto = getRandomUnicInt(1, QUNTITY_POST);
-const unicUrlPhoto = getRandomUnicInt(1, QUNTITY_POST);
 const unicIdCometn = getRandomUnicInt(1, MAX_ID_COMMENTS);
 
 /* Возвращает случайное сообщение коментария */
@@ -44,10 +43,11 @@ function getUserComment() {
 /* Программа, генерирующая один пост */
 function getUserPost() {
 
+  const id = uniceIdPhoto();
 
   return {
-    id: uniceIdPhoto(),
-    url: `photos/${unicUrlPhoto()}.jpg`,
+    id: id,
+    url: `photos/${id}.jpg`,
     description: DESCRIPTION_PHOTOS[getRandomInt(0, DESCRIPTION_PHOTOS.length - 1)],
     likes: getRandomInt(MIN_QUNTITY_LIKES, MAX_QUNTITY_LIKES),
     comments: Array.from({length: getRandomInt(1, QUNTITY_COMMETS)}, getUserComment)

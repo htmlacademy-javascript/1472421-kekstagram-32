@@ -136,7 +136,7 @@
     </section>
 
     <!-- Полноэкранный показ изображения -->
-    <section class="big-picture  overlay  hidden">
+    <section class="big-picture  overlay hidden">
       <h2 class="big-picture__title  visually-hidden">Просмотр фотографии</h2>
       <div class="big-picture__preview">
 
@@ -198,7 +198,7 @@
 
   <!-- Шаблон изображения случайного пользователя -->
   <template id="picture">
-    <a href="#" class="picture">
+    <a href="#" class="picture" id = '1'>
       <img class="picture__img" src="" width="182" height="182" alt="Случайная фотография">
       <p class="picture__info">
         <span class="picture__comments"></span>
@@ -232,6 +232,18 @@
       <section class="data-error">
         <h2 class="data-error__title">Не удалось загрузить данные</h2>
       </section>
+    </template>
+
+     <!-- Шаблон коментария под большим фото -->
+    <template class="comment_template">
+      <li class="social__comment">
+        <img
+          class="social__picture"
+          src="{{аватар}}"
+          alt="{{имя комментатора}}"
+          width="35" height="35">
+        <p class="social__text">{{текст комментария}}</p>
+      </li>
     </template>
 
     <script defer src="/js/function.js"></script>
