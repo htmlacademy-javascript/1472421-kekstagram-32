@@ -56,6 +56,7 @@ function keydownHandler(evt){
   if(evt.key === 'Escape'){
     document.querySelector('.popup-open').classList.add('hidden');
     document.querySelector('.popup-open').classList.remove('popup-open');
+    document.querySelector('body').classList.remove('modal-open');
     document.removeEventListener('keydown', keydownHandler);
   }
 }
