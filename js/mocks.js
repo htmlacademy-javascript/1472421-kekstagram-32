@@ -1,5 +1,5 @@
 import { getRandomUnicInt, getRandomInt } from './utils';
-import { QUNTITY_POST, QUNTITY_COMMETS, QUNTITY_AVATAR_COMMETS, MAX_ID_COMMENTS, MIN_QUNTITY_LIKES, MAX_QUNTITY_LIKES} from './const';
+import { QUNTITY_POST, QUNTITY_COMMETS, QUNTITY_AVATAR_COMMETS, MAX_ID_COMMENTS, MIN_QUNTITY_LIKES, MAX_QUNTITY_LIKES, COMMENTS_SHOW_COUNT} from './const';
 
 const NAME = ['Андрей', 'Артём', 'Яна', 'Александр', 'Анастасия', 'Катя'];
 const MESSAGE = [
@@ -50,7 +50,7 @@ function getUserPost() {
     url: `photos/${id}.jpg`,
     description: DESCRIPTION_PHOTOS[getRandomInt(0, DESCRIPTION_PHOTOS.length - 1)],
     likes: getRandomInt(MIN_QUNTITY_LIKES, MAX_QUNTITY_LIKES),
-    comments: Array.from({length: getRandomInt(1, QUNTITY_COMMETS)}, getUserComment)
+    comments: Array.from({length: getRandomInt(COMMENTS_SHOW_COUNT, QUNTITY_COMMETS)}, getUserComment)
   };
 
 }

@@ -41,10 +41,21 @@ function findById(arr, id) {
   return arr.find((element) => element.id === id);
 }
 
+/* Закроет попап и снимет слушатель события клик по кнопке закрытия попапа */
+function closeClickHandler(evt) {
+  if(evt.target.classList.contains('cancel')){
+    evt.currentTarget.classList.add('hidden');
+    document.querySelector('body').classList.remove('modal-open');
+    evt.currentTarget.removeEventListener('click', closeClickHandler);
+  }
+}
 
-/* Выполнит рендер попапа любого попапа */
+
+/* Выполнит рендер любого попапа и повесит на него слушатель события клика по кнопке закрытия */
 function openPopup(date, element, renderPopup){
+  document.querySelector('body').classList.add('modal-open');
   renderPopup(date, element);
+  element.addEventListener('click', closeClickHandler);
 }
 
 export {getRandomUnicInt, getRandomInt, findById, openPopup};
