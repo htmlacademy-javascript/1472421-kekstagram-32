@@ -22,7 +22,6 @@ function renderMiniaturePosts(postsData) {
   });
 
   userPostsContainer.append(posts);
-
 }
 
 export {renderMiniaturePosts};

@@ -1,17 +1,16 @@
 import { renderMiniaturePosts } from './renderMiniaturePosts';
 import { getUserPostData } from './mocks';
-import { fillBigPicture } from './renderBigPost';
-import { findById, openPopup } from './utils';
+import { openModalBigPicture } from './renderBigPost';
+import { findById } from './utils';
 
 const userPostsData = getUserPostData();
 const userPostsContainer = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 
+renderMiniaturePosts(userPostsData);
 
 userPostsContainer.addEventListener('click', (evt) => {
   evt.preventDefault();
-  openPopup(findById(userPostsData, +evt.target.id), bigPicture, fillBigPicture);
+  openModalBigPicture(findById(userPostsData, +evt.target.id), bigPicture);
 });
 
-
-renderMiniaturePosts(userPostsData);
