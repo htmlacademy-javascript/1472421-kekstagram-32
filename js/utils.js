@@ -41,40 +41,27 @@ function findById(arr, id) {
   return arr.find((element) => element.id === id);
 }
 
-/* Закроет попап по кнопке закрытия попапа */
-function closeClickHandler(evt) {
-  if(evt.target.classList.contains('cancel')){
-    closePopup();
-  }
-}
+function closePopup(element, closeClickHandler, keydownHandler){
 
-/* По нажатию Esc найдет открытый попап
-(элемент с классом ) popup-open скроет его и убирет этот класс*/
-function keydownHandler(evt){
-  if(evt.key === 'Escape'){
-    closePopup();
-  }
-}
-
-function closePopup(){
+  element.classList.add('hidden');
+  element.classList.remove('popup-open');
   document.querySelector('body').classList.remove('modal-open');
 
   document.removeEventListener('keydown', keydownHandler);
-  document.querySelector('.popup-open').removeEventListener('click', closeClickHandler);
+  element.removeEventListener('click', closeClickHandler);
 
-  document.querySelector('.popup-open').classList.add('hidden');
-  document.querySelector('.popup-open').classList.remove('popup-open');
 }
 
 
 /* Выполнит рендер любого попапа и повесит на него слушатель события клика по кнопке закрытия */
-function openPopup(element){
-  document.querySelector('body').classList.add('modal-open');
+function openPopup(element, closeClickHandler, keydownHandler){
+
   element.classList.add('popup-open');
   element.classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
 
   element.addEventListener('click', closeClickHandler);
   document.addEventListener('keydown', keydownHandler);
 }
 
-export {getRandomUnicInt, getRandomInt, findById, openPopup};
+export {getRandomUnicInt, getRandomInt, findById, openPopup, closePopup};
