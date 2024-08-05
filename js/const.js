@@ -20,5 +20,29 @@ const ValidErrorText = {
 const commentsList = document.querySelector('.social__comments');
 const bigPicture = document.querySelector('.big-picture');
 
+const uploadPostForm = document.querySelector('.img-upload__form');
+const uploadPostPopup = uploadPostForm.querySelector('.img-upload__overlay');
+const hashtagInput = uploadPostPopup.querySelector('.text__hashtags');
+const descriptionInput = uploadPostPopup.querySelector('.text__description');
 
-export {QUNTITY_POST, MIN_QUNTITY_LIKES, MAX_QUNTITY_LIKES, QUNTITY_COMMETS, QUNTITY_AVATAR_COMMETS, MAX_ID_COMMENTS, COMMENTS_SHOW_COUNT, COMMENTS_STEP, VALID_REG_EXP, bigPicture, commentsList, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT};
+
+export {
+  QUNTITY_POST,
+  MIN_QUNTITY_LIKES,
+  MAX_QUNTITY_LIKES,
+  QUNTITY_COMMETS,
+  QUNTITY_AVATAR_COMMETS,
+  MAX_ID_COMMENTS,
+  COMMENTS_SHOW_COUNT,
+  COMMENTS_STEP,
+  VALID_REG_EXP,
+  bigPicture,
+  commentsList,
+  ValidErrorText,
+  MAX_HASHTAG_COUNT,
+  MAX_TEXT_SYMBOL_COUNT,
+  uploadPostForm,
+  uploadPostPopup,
+  hashtagInput,
+  descriptionInput
+};
