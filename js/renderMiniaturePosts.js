@@ -31,7 +31,7 @@ function renderMiniaturePosts(postsData) {
     element.addEventListener('click', (evt) => {
       evt.preventDefault();
       openModalBigPicture(findById(postsData, +evt.target.id), bigPicture);
-    })
+    });
   });
 }
 

@@ -1,13 +1,11 @@
 import { openPopup } from './utils';
 import { VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup } from './const';
 import { resetScale } from './scale';
-
+import { resetSlider } from './effects';
 
 
 const uploadStartButton = uploadPostForm.querySelector('.img-upload__label');
 const submitButton = uploadPostPopup.querySelector('.img-upload__submit');
-
-
 
 
 const pristine = new Pristine(uploadPostForm, {
@@ -84,7 +82,8 @@ uploadStartButton.addEventListener('click', () => {
   uploadPostForm.reset();
   pristine.reset();
   resetScale();
-})
+  resetSlider();
+});
 
 uploadPostForm.addEventListener('change', () => {
   openPopup(uploadPostPopup);

@@ -30,6 +30,16 @@ const uploadPostForm = document.querySelector('.img-upload__form');
 const uploadPostPopup = uploadPostForm.querySelector('.img-upload__overlay');
 const hashtagInput = uploadPostPopup.querySelector('.text__hashtags');
 const descriptionInput = uploadPostPopup.querySelector('.text__description');
+const imageElement = uploadPostForm.querySelector('.img-upload__preview img');
+
+const Effects = {
+  DEFAULT: 'none',
+  CHROME: 'chrome',
+  SEPIA: 'sepia',
+  MARVIN: 'marvin',
+  PHOBOS: 'phobos',
+  HEAT: 'heat'
+};
 
 
 export {
@@ -54,5 +64,7 @@ export {
   MIN_SCALE_VALUE,
   MAX_SCALE_VALUE,
   SCALE_STEP,
-  DEFAULT_SCALE_VALUE
+  DEFAULT_SCALE_VALUE,
+  imageElement,
+  Effects
 };

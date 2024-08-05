@@ -1,4 +1,4 @@
-import { openPopup, closePopup } from './utils';
+import { openPopup } from './utils';
 import { renderComments } from './comments';
 
 

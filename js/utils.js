@@ -1,4 +1,4 @@
-import { hashtagInput, descriptionInput } from "./const";
+import { hashtagInput, descriptionInput } from './const';
 
 function getRandomInt(min, max) {
   const lower = Math.ceil(Math.min(min, max));
