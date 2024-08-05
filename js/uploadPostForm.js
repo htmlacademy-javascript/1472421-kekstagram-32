@@ -1,5 +1,6 @@
-import { openPopup, closePopup } from './utils';
+import { openPopup } from './utils';
 import { VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup } from './const';
+import { resetScale } from './scale';
 
 
 
@@ -82,6 +83,7 @@ function disableSubmitButton() {
 uploadStartButton.addEventListener('click', () => {
   uploadPostForm.reset();
   pristine.reset();
+  resetScale();
 })
 
 uploadPostForm.addEventListener('change', () => {

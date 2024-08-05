@@ -9,6 +9,12 @@ const COMMENTS_STEP = 5;
 const VALID_REG_EXP = new RegExp(/^#[a-zа-яё0-9]{1,19}$/i);
 const MAX_HASHTAG_COUNT = 5;
 const MAX_TEXT_SYMBOL_COUNT = 140;
+const MIN_SCALE_VALUE = 25;
+const MAX_SCALE_VALUE = 100;
+const SCALE_STEP = 25;
+const DEFAULT_SCALE_VALUE = 100;
+
+
 const ValidErrorText = {
   INVALID_COUNT_HASHTAG: `Максимум: ${MAX_HASHTAG_COUNT} хэштегов`,
   NOT_UNIQUE_HASHTAG: 'Хэштеги должны быть уникальными',
@@ -44,5 +50,9 @@ export {
   uploadPostForm,
   uploadPostPopup,
   hashtagInput,
-  descriptionInput
+  descriptionInput,
+  MIN_SCALE_VALUE,
+  MAX_SCALE_VALUE,
+  SCALE_STEP,
+  DEFAULT_SCALE_VALUE
 };
