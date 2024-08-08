@@ -1,11 +1,12 @@
 import { renderMiniaturePosts } from './renderMiniaturePosts';
 import { initSlider } from './effects';
-import { getRequest } from './service';
+import { makeRequest } from './service';
+import { errorMiniaturePostsRequestHandler } from './errors';
 import './uploadPostForm';
 
-const requestNow = getRequest('https://32.javascript.htmlacademy.pro/kekstagram/data', renderMiniaturePosts);
+const initRenderMiniaturePosts = makeRequest('https://32.javascript.htmlacademy.pro/kekstagram/data', renderMiniaturePosts, errorMiniaturePostsRequestHandler);
 
-requestNow();
+initRenderMiniaturePosts();
 initSlider();
 
 

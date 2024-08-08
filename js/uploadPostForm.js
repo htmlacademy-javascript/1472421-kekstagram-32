@@ -90,3 +90,9 @@ uploadPostForm.addEventListener('change', () => {
   pristine.validate();
   disableSubmitButton();
 });
+
+/* uploadPostForm.addEventListener('submit', () => {
+  openPopup(uploadPostPopup);
+  pristine.validate();
+  disableSubmitButton();
+}); */

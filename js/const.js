@@ -22,11 +22,11 @@ const ValidErrorText = {
   MAX_TEXT_SYMBOL_COUNT: `Максимум ${MAX_TEXT_SYMBOL_COUNT} символов`
 };
 
+const appContainer = document.querySelector('body');
+const commentsList = appContainer.querySelector('.social__comments');
+const bigPicture = appContainer.querySelector('.big-picture');
 
-const commentsList = document.querySelector('.social__comments');
-const bigPicture = document.querySelector('.big-picture');
-
-const uploadPostForm = document.querySelector('.img-upload__form');
+const uploadPostForm = appContainer.querySelector('.img-upload__form');
 const uploadPostPopup = uploadPostForm.querySelector('.img-upload__overlay');
 const hashtagInput = uploadPostPopup.querySelector('.text__hashtags');
 const descriptionInput = uploadPostPopup.querySelector('.text__description');
@@ -66,5 +66,6 @@ export {
   SCALE_STEP,
   DEFAULT_SCALE_VALUE,
   imageElement,
-  Effects
+  Effects,
+  appContainer
 };

@@ -1,5 +1,5 @@
 
-function getRequest(url, onSuccess, method = null){
+function makeRequest(url, onSuccess, onError, method = null){
   return function() {
     fetch(url, method)
       .then((response) => {
@@ -11,11 +11,11 @@ function getRequest(url, onSuccess, method = null){
 
       })
       .then((response) => onSuccess(response))
-      .catch((err) => {
-        console.error(`${err} ошибка какая-то`);
+      .catch(() => {
+        onError();
       });
   }
 }
 
-export {getRequest}
+export {makeRequest}
 
