@@ -1,3 +1,5 @@
+import { hashtagInput, descriptionInput } from './const';
+
 function getRandomInt(min, max) {
   const lower = Math.ceil(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
@@ -41,20 +43,37 @@ function findById(arr, id) {
   return arr.find((element) => element.id === id);
 }
 
-function closePopup(element, closeClickHandler, keydownHandler){
 
-  element.classList.add('hidden');
-  element.classList.remove('popup-open');
+const isInputFocused = () => document.activeElement === hashtagInput || document.activeElement === descriptionInput;
+
+function keydownHandler(evt){
+  if(evt.key === 'Escape' && !isInputFocused()){
+    const activePopup = document.querySelector('.popup-open');
+    closePopup(activePopup);
+  }
+}
+
+function closeClickHandler(evt) {
+  if(evt.target.classList.contains('cancel')){
+    closePopup(evt.currentTarget);
+  }
+}
+
+
+function closePopup(activePopup){
+
+  activePopup.classList.add('hidden');
+  activePopup.classList.remove('popup-open');
   document.querySelector('body').classList.remove('modal-open');
 
   document.removeEventListener('keydown', keydownHandler);
-  element.removeEventListener('click', closeClickHandler);
+  activePopup.removeEventListener('click', closeClickHandler);
 
 }
 
 
-/* Выполнит рендер любого попапа и повесит на него слушатель события клика по кнопке закрытия */
-function openPopup(element, closeClickHandler, keydownHandler){
+/* Выполнит показ любого попапа и повесит на него слушатель события клика по кнопке закрытия */
+function openPopup(element){
 
   element.classList.add('popup-open');
   element.classList.remove('hidden');

@@ -1,3 +1,7 @@
+import { openModalBigPicture } from './renderBigPost';
+import { findById} from './utils';
+import { bigPicture } from './const';
+
 const userPostsContainer = document.querySelector('.pictures');
 const userPostsTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -22,6 +26,13 @@ function renderMiniaturePosts(postsData) {
   });
 
   userPostsContainer.append(posts);
+
+  userPostsContainer.querySelectorAll('.picture__img').forEach((element) => {
+    element.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      openModalBigPicture(findById(postsData, +evt.target.id), bigPicture);
+    });
+  });
 }
 
 export {renderMiniaturePosts};

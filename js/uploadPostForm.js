@@ -1,14 +1,11 @@
-import { openPopup, closePopup } from './utils';
-import { VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT } from './const';
+import { openPopup } from './utils';
+import { VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup } from './const';
+import { resetScale } from './scale';
+import { resetSlider } from './effects';
 
 
-const uploadPostForm = document.querySelector('.img-upload__form');
-const uploadPostPopup = uploadPostForm.querySelector('.img-upload__overlay');
-const hashtagInput = document.querySelector('.text__hashtags');
-const descriptionInput = document.querySelector('.text__description');
-const submitButton = document.querySelector('.img-upload__submit');
-
-const isInputFocused = () => document.activeElement === hashtagInput || document.activeElement === descriptionInput;
+const uploadStartButton = uploadPostForm.querySelector('.img-upload__label');
+const submitButton = uploadPostPopup.querySelector('.img-upload__submit');
 
 
 const pristine = new Pristine(uploadPostForm, {
@@ -80,27 +77,16 @@ function disableSubmitButton() {
   }
 }
 
-function closeClickHandler(evt) {
-  if(evt.target.classList.contains('cancel')){
-    uploadPostForm.reset();
-    pristine.reset();
-    closePopup(evt.currentTarget, closeClickHandler, keydownHandler);
-  }
-}
-
-function keydownHandler(evt){
-  if(evt.key === 'Escape' && !isInputFocused()){
-    evt.preventDefault();
-    uploadPostForm.reset();
-    pristine.reset();
-    document.querySelector('.popup-open').classList.add('hidden');
-    document.querySelector('.popup-open').classList.remove('popup-open');
-  }
-}
-
+/* Обнуляет форму перед открытием */
+uploadStartButton.addEventListener('click', () => {
+  uploadPostForm.reset();
+  pristine.reset();
+  resetScale();
+  resetSlider();
+});
 
 uploadPostForm.addEventListener('change', () => {
-  openPopup(uploadPostPopup, closeClickHandler, keydownHandler);
-  disableSubmitButton();
+  openPopup(uploadPostPopup);
   pristine.validate();
+  disableSubmitButton();
 });
