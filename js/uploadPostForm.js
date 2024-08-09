@@ -77,22 +77,22 @@ function disableSubmitButton() {
   } else {
     submitButton.disabled = false;
   }
-};
+}
 
 function successMessageButtonHandler(element){
   return function() {
     element.remove();
   };
-};
+}
 
 function documentClickHandler(element) {
   return function(evt) {
     if(!evt.currentTarget.classList.contains('success')){
       element.remove();
-      document.removeEventListener('click',onDocumentClick(element));
+      document.removeEventListener('click',documentClickHandler(element));
     }
   };
-};
+}
 
 function whenSuccessMessegeKeyDownHandler(element){
   return function(evt) {
@@ -101,7 +101,7 @@ function whenSuccessMessegeKeyDownHandler(element){
       document.removeEventListener('keydown', whenSuccessMessegeKeyDownHandler(element));
     }
   };
-};
+}
 
 function getSuccessMessage() {
   const succeessMessageTemplate = appContainer.querySelector('#success')
@@ -115,7 +115,7 @@ function getSuccessMessage() {
   document.addEventListener('keydown', whenSuccessMessegeKeyDownHandler(succeessMessage));
 
   appContainer.append(succeessMessage);
-};
+}
 
 /* Функция выполняет очистку фильтров, пристина, формы и закрывает форму */
 function closeForm(){
@@ -130,14 +130,13 @@ function closeForm(){
 function onSuccessPostForm() {
   closeForm();
   getSuccessMessage();
-};
+}
 
 
 uploadPostForm.addEventListener('change', () => {
   openPopup(uploadPostPopup);
   pristine.validate();
   disableSubmitButton();
-  console.log(uploadPostForm[1].files)
 });
 
 uploadPostForm.addEventListener('submit', (evt) => {
@@ -153,13 +152,12 @@ uploadPostForm.addEventListener('submit', (evt) => {
 function closeFormButtonHandler(){
   closeForm();
   closeFormButton.removeEventListener('click', closeFormButtonHandler);
-};
+}
 
 function keydownCloseFormHandler(evt){
   if(evt.key === 'Escape'){
     closeForm();
     document.removeEventListener('keydown', keydownCloseFormHandler);
-    console.log(uploadPostForm[1].files)
   }
 }
 

@@ -8,6 +8,3 @@ const initRenderMiniaturePosts = makeGetRequest('https://32.javascript.htmlacade
 
 initRenderMiniaturePosts();
 initSlider();
-
-
-

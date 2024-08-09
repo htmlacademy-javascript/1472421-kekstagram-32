@@ -15,8 +15,8 @@ function makeGetRequest(url, onSuccess, onError){
       .catch(() => {
         onError();
       });
-  }
-};
+  };
+}
 
 function makePostRequest(url, onSuccess, onError, body){
 
@@ -34,8 +34,8 @@ function makePostRequest(url, onSuccess, onError, body){
       .catch(() => {
         onError('Ошибка');
       });
-  }
-};
+  };
+}
 
-export {makeGetRequest, makePostRequest}
+export {makeGetRequest, makePostRequest};
 
