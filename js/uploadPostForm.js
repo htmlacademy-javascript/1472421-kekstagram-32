@@ -7,6 +7,7 @@ import { onErrorPostForm } from './errors';
 
 
 const submitButton = uploadPostPopup.querySelector('.img-upload__submit');
+const closeFormButton = uploadPostPopup.querySelector('.img-upload__cancel');
 
 
 const pristine = new Pristine(uploadPostForm, {
@@ -113,25 +114,30 @@ function getSuccessMessage() {
   appContainer.addEventListener('click', documentClickHandler(succeessMessage));
   document.addEventListener('keydown', whenSuccessMessegeKeyDownHandler(succeessMessage));
 
-
-
   appContainer.append(succeessMessage);
 };
 
-/* При успешной отправки формы на сервер, обнулит форму и пристин и закроет форму */
-function onSuccessPostForm() {
+/* Функция выполняет очистку фильтров, пристина, формы и закрывает форму */
+function closeForm(){
   uploadPostForm.reset();
   pristine.reset();
   resetScale();
   resetSlider();
   closePopup(uploadPostPopup);
+}
+
+/* При успешной отправки формы на сервер, обнулит форму и пристин и закроет форму */
+function onSuccessPostForm() {
+  closeForm();
   getSuccessMessage();
 };
+
 
 uploadPostForm.addEventListener('change', () => {
   openPopup(uploadPostPopup);
   pristine.validate();
   disableSubmitButton();
+  console.log(uploadPostForm[1].files)
 });
 
 uploadPostForm.addEventListener('submit', (evt) => {
@@ -144,5 +150,18 @@ uploadPostForm.addEventListener('submit', (evt) => {
   postRequest();
 });
 
-/* При закрытии форма должна сбрасываться так же, как при успешной отправке
- */
+function closeFormButtonHandler(){
+  closeForm();
+  closeFormButton.removeEventListener('click', closeFormButtonHandler);
+};
+
+function keydownCloseFormHandler(evt){
+  if(evt.key === 'Escape'){
+    closeForm();
+    document.removeEventListener('keydown', keydownCloseFormHandler);
+    console.log(uploadPostForm[1].files)
+  }
+}
+
+closeFormButton.addEventListener('click', closeFormButtonHandler);
+document.addEventListener('keydown', keydownCloseFormHandler);

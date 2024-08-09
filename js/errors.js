@@ -16,6 +16,9 @@ function onErrorMiniaturePostsRequest(){
 function onErrorPostForm() {
   const templateClone = errorPostFormTemplate.cloneNode(true);
 
+  templateClone.querySelector('.error__button')
+    .addEventListener('click', () => templateClone.remove());
+
   appContainer.append(templateClone);
 }
 
