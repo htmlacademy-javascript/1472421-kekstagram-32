@@ -1,7 +1,8 @@
 
-function makeRequest(url, onSuccess, onError, method = null){
+function makeGetRequest(url, onSuccess, onError){
+
   return function() {
-    fetch(url, method)
+    fetch(url)
       .then((response) => {
         if(response.ok){
           return response.json();
@@ -15,7 +16,26 @@ function makeRequest(url, onSuccess, onError, method = null){
         onError();
       });
   }
-}
+};
 
-export {makeRequest}
+function makePostRequest(url, onSuccess, onError, body){
+
+  return function() {
+    fetch(url, {method: 'POST', body})
+      .then((response) => {
+        if(response.ok){
+          return response;
+        }
+
+        throw new Error(`${response.status} ${response.statusText}`);
+
+      })
+      .then((response) => onSuccess(response))
+      .catch(() => {
+        onError('Ошибка');
+      });
+  }
+};
+
+export {makeGetRequest, makePostRequest}
 

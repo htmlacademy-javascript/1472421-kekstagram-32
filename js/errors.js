@@ -1,9 +1,11 @@
 import { appContainer } from './const';
 
-const errorMiniaturePostsRequestTemplate = document.querySelector('#data-error')
+const errorMiniaturePostsRequestTemplate = appContainer.querySelector('#data-error')
   .content.querySelector('.data-error');
+const errorPostFormTemplate = appContainer.querySelector('#error')
+.content.querySelector('.error');
 
-function errorMiniaturePostsRequestHandler(){
+function onErrorMiniaturePostsRequest(){
   const templateClone = errorMiniaturePostsRequestTemplate.cloneNode(true);
 
   appContainer.append(templateClone);
@@ -11,4 +13,10 @@ function errorMiniaturePostsRequestHandler(){
   setTimeout(() => templateClone.remove(), 3000);
 };
 
-export {errorMiniaturePostsRequestHandler}
+function onErrorPostForm() {
+  const templateClone = errorPostFormTemplate.cloneNode(true);
+
+  appContainer.append(templateClone);
+}
+
+export {onErrorMiniaturePostsRequest, onErrorPostForm}
