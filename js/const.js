@@ -13,6 +13,7 @@ const MIN_SCALE_VALUE = 25;
 const MAX_SCALE_VALUE = 100;
 const SCALE_STEP = 25;
 const DEFAULT_SCALE_VALUE = 100;
+const TIMEOUT_DELAY = 500;
 
 
 const ValidErrorText = {
@@ -87,5 +88,6 @@ export {
   filterActiveButtonClass,
   COUNT_SHOW_RANDOM_POSTS,
   RANDOMNESS_LEVEL,
-  POST_URL
+  POST_URL,
+  TIMEOUT_DELAY
 };

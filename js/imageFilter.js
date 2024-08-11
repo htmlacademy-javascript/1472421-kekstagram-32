@@ -1,6 +1,6 @@
-import { COUNT_SHOW_RANDOM_POSTS, Filters, RANDOMNESS_LEVEL, appContainer, filterActiveButtonClass } from './const';
+import { COUNT_SHOW_RANDOM_POSTS, Filters, RANDOMNESS_LEVEL, TIMEOUT_DELAY, appContainer, filterActiveButtonClass } from './const';
 import { renderMiniaturePosts } from './renderMiniaturePosts';
-import { getRandomInt } from './utils';
+import { debounce, getRandomInt } from './utils';
 
 const imageFilter = appContainer.querySelector('.img-filters');
 let chousenFilterOption = Filters.DEFAULT;
@@ -29,17 +29,17 @@ function updateFilter(data) {
   let copyData = structuredClone(data);
 
   if(chousenFilterOption === Filters.DEFAULT){
-    renderMiniaturePosts(data);
+    debounce(() => renderMiniaturePosts(data), TIMEOUT_DELAY)();
   }
 
   if(chousenFilterOption === Filters.RANDOM){
     copyData = copyData.sort(getRandomPost).slice(0, COUNT_SHOW_RANDOM_POSTS);
-    renderMiniaturePosts(copyData);
+    debounce(() => renderMiniaturePosts(copyData), TIMEOUT_DELAY)();
   }
 
   if(chousenFilterOption === Filters.DISCUSSED){
     copyData = copyData.sort(getPopularFilter);
-    renderMiniaturePosts(copyData);
+    debounce(() => renderMiniaturePosts(copyData), TIMEOUT_DELAY)();
   }
 
   showChousenButton();
@@ -56,11 +56,11 @@ function setFilter(data) {
   };
 }
 
-function showFilter(data) {
+function initFilter(data) {
   imageFilter.classList.remove('img-filters--inactive');
 
   imageFilter.addEventListener('click', setFilter(data));
 }
 
 
-export {showFilter};
+export {initFilter};
