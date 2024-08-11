@@ -1,11 +1,13 @@
-import { openPopup } from './utils';
-import { VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup } from './const';
+import { closePopup, openPopup } from './utils';
+import { VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer } from './const';
 import { resetScale } from './scale';
 import { resetSlider } from './effects';
+import { makePostRequest } from './service';
+import { onErrorPostForm } from './errors';
 
 
-const uploadStartButton = uploadPostForm.querySelector('.img-upload__label');
 const submitButton = uploadPostPopup.querySelector('.img-upload__submit');
+const closeFormButton = uploadPostPopup.querySelector('.img-upload__cancel');
 
 
 const pristine = new Pristine(uploadPostForm, {
@@ -77,16 +79,87 @@ function disableSubmitButton() {
   }
 }
 
-/* Обнуляет форму перед открытием */
-uploadStartButton.addEventListener('click', () => {
+function successMessageButtonHandler(element){
+  return function() {
+    element.remove();
+  };
+}
+
+function documentClickHandler(element) {
+  return function(evt) {
+    if(!evt.currentTarget.classList.contains('success')){
+      element.remove();
+      document.removeEventListener('click',documentClickHandler(element));
+    }
+  };
+}
+
+function whenSuccessMessegeKeyDownHandler(element){
+  return function(evt) {
+    if(evt.key === 'Escape'){
+      element.remove();
+      document.removeEventListener('keydown', whenSuccessMessegeKeyDownHandler(element));
+    }
+  };
+}
+
+function getSuccessMessage() {
+  const succeessMessageTemplate = appContainer.querySelector('#success')
+    .content.querySelector('.success');
+
+  const succeessMessage = succeessMessageTemplate.cloneNode(true);
+  const succeessMessageButton = succeessMessage.querySelector('.success__button');
+
+  succeessMessageButton.addEventListener('click', successMessageButtonHandler(succeessMessage));
+  appContainer.addEventListener('click', documentClickHandler(succeessMessage));
+  document.addEventListener('keydown', whenSuccessMessegeKeyDownHandler(succeessMessage));
+
+  appContainer.append(succeessMessage);
+}
+
+/* Функция выполняет очистку фильтров, пристина, формы и закрывает форму */
+function closeForm(){
   uploadPostForm.reset();
   pristine.reset();
   resetScale();
   resetSlider();
-});
+  closePopup(uploadPostPopup);
+}
+
+/* При успешной отправки формы на сервер, обнулит форму и пристин и закроет форму */
+function onSuccessPostForm() {
+  closeForm();
+  getSuccessMessage();
+}
+
 
 uploadPostForm.addEventListener('change', () => {
   openPopup(uploadPostPopup);
   pristine.validate();
   disableSubmitButton();
 });
+
+uploadPostForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const formData = new FormData(evt.target);
+
+  const postRequest = makePostRequest('https://32.javascript.htmlacademy.pro/kekstagram', onSuccessPostForm, onErrorPostForm, formData);
+
+  postRequest();
+});
+
+function closeFormButtonHandler(){
+  closeForm();
+  closeFormButton.removeEventListener('click', closeFormButtonHandler);
+}
+
+function keydownCloseFormHandler(evt){
+  if(evt.key === 'Escape'){
+    closeForm();
+    document.removeEventListener('keydown', keydownCloseFormHandler);
+  }
+}
+
+closeFormButton.addEventListener('click', closeFormButtonHandler);
+document.addEventListener('keydown', keydownCloseFormHandler);
