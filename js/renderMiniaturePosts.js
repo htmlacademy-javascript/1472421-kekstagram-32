@@ -17,6 +17,17 @@ function createMiniaturePosts(element, template, container){
   container.append(templateClone);
 }
 
+/* Удалит все посты со страницы если они уже есть */
+function delliteMiniaturePost() {
+  const userPostDomElements = userPostsContainer.querySelectorAll('.picture');
+
+  if(userPostDomElements){
+    userPostDomElements.forEach((element) => {
+      element.remove();
+    });
+  }
+}
+
 function renderMiniaturePosts(postsData) {
 
   const posts = document.createDocumentFragment();
@@ -25,6 +36,7 @@ function renderMiniaturePosts(postsData) {
     createMiniaturePosts(post, userPostsTemplate, posts);
   });
 
+  delliteMiniaturePost();
   userPostsContainer.append(posts);
 
   userPostsContainer.querySelectorAll('.picture__img').forEach((element) => {
