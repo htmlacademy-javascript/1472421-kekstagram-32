@@ -13,6 +13,7 @@ const MIN_SCALE_VALUE = 25;
 const MAX_SCALE_VALUE = 100;
 const SCALE_STEP = 25;
 const DEFAULT_SCALE_VALUE = 100;
+const TIMEOUT_DELAY = 500;
 
 
 const ValidErrorText = {
@@ -41,6 +42,20 @@ const Effects = {
   HEAT: 'heat'
 };
 
+const Filters = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed'
+};
+
+const GET_URL = 'https://32.javascript.htmlacademy.pro/kekstagram/data';
+const POST_URL = 'https://32.javascript.htmlacademy.pro/kekstagram';
+
+const filterActiveButtonClass = 'img-filters__button--active';
+
+const COUNT_SHOW_RANDOM_POSTS = 10;
+
+const RANDOMNESS_LEVEL = 200;
 
 export {
   QUNTITY_POST,
@@ -67,5 +82,12 @@ export {
   DEFAULT_SCALE_VALUE,
   imageElement,
   Effects,
-  appContainer
+  appContainer,
+  GET_URL,
+  Filters,
+  filterActiveButtonClass,
+  COUNT_SHOW_RANDOM_POSTS,
+  RANDOMNESS_LEVEL,
+  POST_URL,
+  TIMEOUT_DELAY
 };

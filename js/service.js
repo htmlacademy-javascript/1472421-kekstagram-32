@@ -1,5 +1,5 @@
 
-function makeGetRequest(url, onSuccess, onError){
+function makeGetRequest(url, onSuccess, onError, showFilter){
 
   return function() {
     fetch(url)
@@ -11,7 +11,10 @@ function makeGetRequest(url, onSuccess, onError){
         throw new Error(`${response.status} ${response.statusText}`);
 
       })
-      .then((response) => onSuccess(response))
+      .then((response) => {
+        onSuccess(response);
+        showFilter(response);
+      })
       .catch(() => {
         onError();
       });

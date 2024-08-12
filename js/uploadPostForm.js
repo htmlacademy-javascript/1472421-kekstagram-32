@@ -1,5 +1,5 @@
 import { closePopup, openPopup } from './utils';
-import { VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer } from './const';
+import { VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer, POST_URL } from './const';
 import { resetScale } from './scale';
 import { resetSlider } from './effects';
 import { makePostRequest } from './service';
@@ -144,7 +144,7 @@ uploadPostForm.addEventListener('submit', (evt) => {
 
   const formData = new FormData(evt.target);
 
-  const postRequest = makePostRequest('https://32.javascript.htmlacademy.pro/kekstagram', onSuccessPostForm, onErrorPostForm, formData);
+  const postRequest = makePostRequest(POST_URL, onSuccessPostForm, onErrorPostForm, formData);
 
   postRequest();
 });
