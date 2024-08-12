@@ -33,12 +33,10 @@ function updateFilter(data) {
 
   if(chousenFilterOption === Filters.RANDOM){
     copyData = copyData.sort(getRandomPost).slice(0, COUNT_SHOW_RANDOM_POSTS);
-
   }
 
   if(chousenFilterOption === Filters.DISCUSSED){
     copyData = copyData.sort(getPopularFilter);
-
   }
 
   debounceRenderMiniature(copyData);
