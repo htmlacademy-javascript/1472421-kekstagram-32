@@ -1,5 +1,5 @@
 import { closePopup, openPopup } from './utils';
-import { isInputFocused, VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer, RoutUrl } from './const';
+import { isInputFocused, VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer } from './const';
 import { resetScale } from './scale';
 import { resetSlider } from './effects';
 import { onErrorPostForm } from './errors';
@@ -15,6 +15,11 @@ const pristine = new Pristine(uploadPostForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error'
 });
+
+const setSubmitButtonDisabled = (isDisabled) => {
+  imageUploadFormSubmitButton.disabled = isDisabled;
+  imageUploadFormSubmitButton.textContent = isDisabled ? 'Отправляю...' : 'Опубликовать';
+};
 
 function normalizeTags(tagsString){
   return tagsString.trim().split(' ').filter((tag) => Boolean(tag.length));
@@ -144,13 +149,13 @@ uploadPostForm.addEventListener('submit', (evt) => {
 
   if(pristine.validate()){
     const formData = new FormData(uploadPostForm);
-    submitFormButton.disabled = true;
+    setSubmitButtonDisabled(true);
     postData(formData)
       .then(() => {
         onSuccessPostUploadForm();
       })
       .catch(() => onErrorPostForm())
-      .finally(() => submitFormButton.disabled = false);
+      .finally(() => setSubmitButtonDisabled(false));
   }
 });
 
