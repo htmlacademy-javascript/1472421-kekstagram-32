@@ -129,16 +129,16 @@ function onSuccessPostUploadForm() {
   getSuccessMessage();
 }
 
-function keydownCloseFormHandler(evt){
+function keydownCloseUploadFormHandler(evt){
   if(evt.key === 'Escape' && !isInputFocused()){
     closeForm();
-    document.removeEventListener('keydown', keydownCloseFormHandler);
+    document.removeEventListener('keydown', keydownCloseUploadFormHandler);
   }
 }
 
 function openUploadForm(){
   showUploadImage();
-  document.addEventListener('keydown', keydownCloseFormHandler);
+  document.addEventListener('keydown', keydownCloseUploadFormHandler);
   openPopup(uploadPostPopup);
 }
 
