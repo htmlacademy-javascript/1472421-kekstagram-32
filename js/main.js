@@ -5,7 +5,7 @@ import { onErrorMiniaturePostsRequest } from './errors';
 import { initFilter } from './imageFilter';
 import { GET_URL } from './const';
 import './uploadPostForm';
-
+import './imageUpload';
 
 const initRenderMiniaturePosts = makeGetRequest(GET_URL, renderMiniaturePosts, onErrorMiniaturePostsRequest, initFilter);
 

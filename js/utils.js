@@ -83,6 +83,11 @@ function openPopup(element){
   document.addEventListener('keydown', keydownHandler);
 }
 
+/* При вызове debounce и передачи результата вызова в переменную,
+будет создано лексическое окружение результата вызова, в котором будет перемення
+timeoutId и анонимная функция, знающая о переменной timeoutId и переданных в
+debounce в момент вызова параметров */
+
 function debounce(callback, timeoutDelay) {
   let timeoutId;
   return (...rest) => {

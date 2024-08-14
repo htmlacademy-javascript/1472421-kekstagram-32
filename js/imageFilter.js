@@ -24,24 +24,22 @@ function getPopularFilter(postA, postB){
   return postB.comments.length - postA.comments.length;
 }
 
+
+const debounceRenderMiniature = debounce(renderMiniaturePosts, TIMEOUT_DELAY);
+
 function updateFilter(data) {
 
   let copyData = structuredClone(data);
 
-  if(chousenFilterOption === Filters.DEFAULT){
-    debounce(() => renderMiniaturePosts(data), TIMEOUT_DELAY)();
-  }
-
   if(chousenFilterOption === Filters.RANDOM){
     copyData = copyData.sort(getRandomPost).slice(0, COUNT_SHOW_RANDOM_POSTS);
-    debounce(() => renderMiniaturePosts(copyData), TIMEOUT_DELAY)();
   }
 
   if(chousenFilterOption === Filters.DISCUSSED){
     copyData = copyData.sort(getPopularFilter);
-    debounce(() => renderMiniaturePosts(copyData), TIMEOUT_DELAY)();
   }
 
+  debounceRenderMiniature(copyData);
   showChousenButton();
 }
 
