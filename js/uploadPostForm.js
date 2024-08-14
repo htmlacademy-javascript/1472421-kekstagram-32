@@ -83,7 +83,7 @@ function documentClickHandler(element) {
       element.remove();
       appContainer.removeEventListener('click',documentClickHandler(element));
     }
-  }
+  };
 }
 
 function whenSuccessMessegeKeyDownHandler(element){

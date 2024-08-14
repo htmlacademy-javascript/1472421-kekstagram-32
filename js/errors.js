@@ -17,7 +17,7 @@ function closeErrorPostFormClickHandler(element) {
   return function(){
     element.remove();
     element.removeEventListener('click', closeErrorPostFormClickHandler(element));
-  }
+  };
 }
 
 function documentClickHandler(element) {
@@ -26,7 +26,7 @@ function documentClickHandler(element) {
       element.remove();
       appContainer.removeEventListener('click',documentClickHandler(element));
     }
-  }
+  };
 }
 
 function whenErrorMessegeKeyDownHandler(element){

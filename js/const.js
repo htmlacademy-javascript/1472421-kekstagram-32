@@ -51,12 +51,12 @@ const Filters = {
 const RoutUrl = {
   GET_URL: 'https://32.javascript.htmlacademy.pro/kekstagram/data',
   POST_URL: 'https://32.javascript.htmlacademy.pro/kekstagram/'
-}
+};
 
 const Methods = {
   GET: 'GET',
   POST: 'POST'
-}
+};
 
 const filterActiveButtonClass = 'img-filters__button--active';
 

@@ -18,7 +18,7 @@ function getData(){
 }
 
 function postData(body){
-  return load(RoutUrl.POST_URL, Methods.POST, body)
+  return load(RoutUrl.POST_URL, Methods.POST, body);
 }
 
 
