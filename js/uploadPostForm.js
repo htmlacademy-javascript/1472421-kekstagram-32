@@ -1,12 +1,12 @@
 import { closePopup, openPopup } from './utils';
-import { VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer, POST_URL } from './const';
+import { isInputFocused, VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer, POST_URL } from './const';
 import { resetScale } from './scale';
 import { resetSlider } from './effects';
 import { makePostRequest } from './service';
 import { onErrorPostForm } from './errors';
+import { showUploadImage } from './imageUpload';
 
 
-const submitButton = uploadPostPopup.querySelector('.img-upload__submit');
 const closeFormButton = uploadPostPopup.querySelector('.img-upload__cancel');
 
 
@@ -70,14 +70,6 @@ pristine.addValidator(
   true
 );
 
-/* Функция блокирует кнопку отправки формы при наличии ошибок валидации */
-function disableSubmitButton() {
-  if(pristine.getErrors().length){
-    submitButton.disabled = true;
-  } else {
-    submitButton.disabled = false;
-  }
-}
 
 function successMessageButtonHandler(element){
   return function() {
@@ -134,19 +126,20 @@ function onSuccessPostForm() {
 
 
 uploadPostForm.addEventListener('change', () => {
+  showUploadImage();
   openPopup(uploadPostPopup);
-  pristine.validate();
-  disableSubmitButton();
 });
 
 uploadPostForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  const formData = new FormData(evt.target);
+  if(pristine.validate()){
+    const formData = new FormData(uploadPostForm);
 
-  const postRequest = makePostRequest(POST_URL, onSuccessPostForm, onErrorPostForm, formData);
+    const postRequest = makePostRequest(POST_URL, onSuccessPostForm, onErrorPostForm, formData);
 
-  postRequest();
+    postRequest();
+  }
 });
 
 function closeFormButtonHandler(){
@@ -155,7 +148,7 @@ function closeFormButtonHandler(){
 }
 
 function keydownCloseFormHandler(evt){
-  if(evt.key === 'Escape'){
+  if(evt.key === 'Escape' && !isInputFocused()){
     closeForm();
     document.removeEventListener('keydown', keydownCloseFormHandler);
   }

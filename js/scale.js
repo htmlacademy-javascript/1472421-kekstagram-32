@@ -6,15 +6,15 @@ const scaleValueInput = uploadPostForm.querySelector('.scale__control--value');
 
 function setScaleValue(value){
   imageElement.style.transform = `scale(${value / 100})`;
-  scaleValueInput.value = `${value}`;
+  scaleValueInput.value = `${value}%`;
 }
 
 function smallerButtonHandler(){
-  setScaleValue(Math.max(+scaleValueInput.value - SCALE_STEP, MIN_SCALE_VALUE));
+  setScaleValue(Math.max(parseInt(scaleValueInput.value, 10) - SCALE_STEP, MIN_SCALE_VALUE));
 }
 
 function biggerButtonHandler(){
-  setScaleValue(Math.min(+scaleValueInput.value + SCALE_STEP, MAX_SCALE_VALUE));
+  setScaleValue(Math.min(parseInt(scaleValueInput.value, 10) + SCALE_STEP, MAX_SCALE_VALUE));
 }
 
 function resetScale(){

@@ -1,13 +1,18 @@
 import { renderMiniaturePosts } from './renderMiniaturePosts';
 import { initSlider } from './effects';
-import { makeGetRequest } from './service';
+import { getData } from './service';
 import { onErrorMiniaturePostsRequest } from './errors';
 import { initFilter } from './imageFilter';
-import { GET_URL } from './const';
 import './uploadPostForm';
 import './imageUpload';
 
-const initRenderMiniaturePosts = makeGetRequest(GET_URL, renderMiniaturePosts, onErrorMiniaturePostsRequest, initFilter);
 
-initRenderMiniaturePosts();
 initSlider();
+
+try {
+  const data = await getData();
+  renderMiniaturePosts(data);
+  initFilter(data);
+} catch {
+  onErrorMiniaturePostsRequest();
+}

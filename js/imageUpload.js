@@ -1,6 +1,7 @@
 import { FILE_TYPES, uploadPostForm, imageElement } from './const';
 
 const imageUploadInput = uploadPostForm.querySelector('.img-upload__input');
+const effectsPreview = uploadPostForm.querySelectorAll('.effects__preview');
 
 
 function getMatches(file, fileTypes){
@@ -15,9 +16,14 @@ function showUploadImage(){
 
   if(matches){
     imageElement.src = URL.createObjectURL(file);
+
+    effectsPreview.forEach((preview) => {
+      preview.style.backgroundImage = `url(${imageElement.src})`;
+    });
   }
 
 }
 
 
-imageUploadInput.addEventListener('change', showUploadImage);
+/* imageUploadInput.addEventListener('change', showUploadImage); */
+export {showUploadImage};

@@ -57,7 +57,9 @@ const COUNT_SHOW_RANDOM_POSTS = 10;
 
 const RANDOMNESS_LEVEL = 200;
 
-const FILE_TYPES = ['jpeg', 'jpg'];
+const FILE_TYPES = ['jpeg', 'jpg', 'png'];
+
+const isInputFocused = () => document.activeElement === hashtagInput || document.activeElement === descriptionInput;
 
 export {
   QUNTITY_POST,
@@ -92,5 +94,6 @@ export {
   RANDOMNESS_LEVEL,
   POST_URL,
   TIMEOUT_DELAY,
-  FILE_TYPES
+  FILE_TYPES,
+  isInputFocused
 };

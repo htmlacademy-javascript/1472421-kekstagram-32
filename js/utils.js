@@ -1,4 +1,4 @@
-import { hashtagInput, descriptionInput } from './const';
+import { isInputFocused } from './const';
 
 function getRandomInt(min, max) {
   const lower = Math.ceil(Math.min(min, max));
@@ -43,8 +43,6 @@ function findById(arr, id) {
   return arr.find((element) => element.id === id);
 }
 
-
-const isInputFocused = () => document.activeElement === hashtagInput || document.activeElement === descriptionInput;
 
 function keydownHandler(evt){
   if(evt.key === 'Escape' && !isInputFocused()){
