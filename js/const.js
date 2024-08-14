@@ -48,8 +48,15 @@ const Filters = {
   DISCUSSED: 'filter-discussed'
 };
 
-const GET_URL = 'https://32.javascript.htmlacademy.pro/kekstagram/data';
-const POST_URL = 'https://32.javascript.htmlacademy.pro/kekstagram';
+const RoutUrl = {
+  GET_URL: 'https://32.javascript.htmlacademy.pro/kekstagram/data',
+  POST_URL: 'https://32.javascript.htmlacademy.pro/kekstagram/'
+}
+
+const Methods = {
+  GET: 'GET',
+  POST: 'POST'
+}
 
 const filterActiveButtonClass = 'img-filters__button--active';
 
@@ -87,12 +94,12 @@ export {
   imageElement,
   Effects,
   appContainer,
-  GET_URL,
   Filters,
   filterActiveButtonClass,
   COUNT_SHOW_RANDOM_POSTS,
   RANDOMNESS_LEVEL,
-  POST_URL,
+  RoutUrl,
+  Methods,
   TIMEOUT_DELAY,
   FILE_TYPES,
   isInputFocused

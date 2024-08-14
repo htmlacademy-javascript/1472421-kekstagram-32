@@ -1,5 +1,3 @@
-import { isInputFocused } from './const';
-
 function getRandomInt(min, max) {
   const lower = Math.ceil(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
@@ -43,14 +41,6 @@ function findById(arr, id) {
   return arr.find((element) => element.id === id);
 }
 
-
-function keydownHandler(evt){
-  if(evt.key === 'Escape' && !isInputFocused()){
-    const activePopup = document.querySelector('.popup-open');
-    closePopup(activePopup);
-  }
-}
-
 function closeClickHandler(evt) {
   if(evt.target.classList.contains('cancel')){
     closePopup(evt.currentTarget);
@@ -64,7 +54,6 @@ function closePopup(activePopup){
   activePopup.classList.remove('popup-open');
   document.querySelector('body').classList.remove('modal-open');
 
-  document.removeEventListener('keydown', keydownHandler);
   activePopup.removeEventListener('click', closeClickHandler);
 
 }
@@ -78,7 +67,6 @@ function openPopup(element){
   document.querySelector('body').classList.add('modal-open');
 
   element.addEventListener('click', closeClickHandler);
-  document.addEventListener('keydown', keydownHandler);
 }
 
 /* При вызове debounce и передачи результата вызова в переменную,

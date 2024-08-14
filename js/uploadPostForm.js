@@ -1,12 +1,12 @@
 import { closePopup, openPopup } from './utils';
-import { isInputFocused, VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer, POST_URL } from './const';
+import { isInputFocused, VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer, RoutUrl } from './const';
 import { resetScale } from './scale';
 import { resetSlider } from './effects';
-import { makePostRequest } from './service';
 import { onErrorPostForm } from './errors';
 import { showUploadImage } from './imageUpload';
+import { postData } from './service';
 
-
+const submitFormButton = uploadPostPopup.querySelector('.img-upload__submit');
 const closeFormButton = uploadPostPopup.querySelector('.img-upload__cancel');
 
 
@@ -79,11 +79,11 @@ function successMessageButtonHandler(element){
 
 function documentClickHandler(element) {
   return function(evt) {
-    if(!evt.currentTarget.classList.contains('success')){
+    if(!evt.target.classList.contains('success__inner')){
       element.remove();
-      document.removeEventListener('click',documentClickHandler(element));
+      appContainer.removeEventListener('click',documentClickHandler(element));
     }
-  };
+  }
 }
 
 function whenSuccessMessegeKeyDownHandler(element){
@@ -118,33 +118,10 @@ function closeForm(){
   closePopup(uploadPostPopup);
 }
 
-/* При успешной отправки формы на сервер, обнулит форму и пристин и закроет форму */
-function onSuccessPostForm() {
+/* При успешной отправки формы на сервер, обнулит форму и закроет форму */
+function onSuccessPostUploadForm() {
   closeForm();
   getSuccessMessage();
-}
-
-
-uploadPostForm.addEventListener('change', () => {
-  showUploadImage();
-  openPopup(uploadPostPopup);
-});
-
-uploadPostForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  if(pristine.validate()){
-    const formData = new FormData(uploadPostForm);
-
-    const postRequest = makePostRequest(POST_URL, onSuccessPostForm, onErrorPostForm, formData);
-
-    postRequest();
-  }
-});
-
-function closeFormButtonHandler(){
-  closeForm();
-  closeFormButton.removeEventListener('click', closeFormButtonHandler);
 }
 
 function keydownCloseFormHandler(evt){
@@ -154,5 +131,34 @@ function keydownCloseFormHandler(evt){
   }
 }
 
+function openUploadForm(){
+  showUploadImage();
+  document.addEventListener('keydown', keydownCloseFormHandler);
+  openPopup(uploadPostPopup);
+}
+
+uploadPostForm.addEventListener('change', openUploadForm);
+
+uploadPostForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  if(pristine.validate()){
+    const formData = new FormData(uploadPostForm);
+    submitFormButton.disabled = true;
+    postData(formData)
+      .then(() => {
+        onSuccessPostUploadForm();
+      })
+      .catch(() => onErrorPostForm())
+      .finally(() => submitFormButton.disabled = false);
+  }
+});
+
+function closeFormButtonHandler(){
+  closeForm();
+  closeFormButton.removeEventListener('click', closeFormButtonHandler);
+}
+
+
 closeFormButton.addEventListener('click', closeFormButtonHandler);
-document.addEventListener('keydown', keydownCloseFormHandler);
+
