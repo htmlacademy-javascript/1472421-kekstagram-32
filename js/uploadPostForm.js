@@ -17,8 +17,8 @@ const pristine = new Pristine(uploadPostForm, {
 });
 
 const setSubmitButtonDisabled = (isDisabled) => {
-  imageUploadFormSubmitButton.disabled = isDisabled;
-  imageUploadFormSubmitButton.textContent = isDisabled ? 'Отправляю...' : 'Опубликовать';
+  submitFormButton.disabled = isDisabled;
+  submitFormButton.textContent = isDisabled ? 'Отправляю...' : 'Опубликовать';
 };
 
 function normalizeTags(tagsString){
