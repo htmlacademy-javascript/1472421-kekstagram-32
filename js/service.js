@@ -1,44 +1,26 @@
+import { Methods, RoutUrl } from './const';
 
-function makeGetRequest(url, onSuccess, onError, showFilter){
-
-  return function() {
-    fetch(url)
-      .then((response) => {
-        if(response.ok){
-          return response.json();
-        }
-
+function load(route, method = 'GET', body = null){
+  return fetch(route, {method, body})
+    .then((response) => {
+      if(!response.ok){
         throw new Error(`${response.status} ${response.statusText}`);
-
-      })
-      .then((response) => {
-        onSuccess(response);
-        showFilter(response);
-      })
-      .catch(() => {
-        onError();
-      });
-  };
+      }
+      return response.json();
+    })
+    .catch((err) => {
+      throw new Error(err.message);
+    });
 }
 
-function makePostRequest(url, onSuccess, onError, body){
-
-  return function() {
-    fetch(url, {method: 'POST', body})
-      .then((response) => {
-        if(response.ok){
-          return response;
-        }
-
-        throw new Error(`${response.status} ${response.statusText}`);
-
-      })
-      .then((response) => onSuccess(response))
-      .catch(() => {
-        onError('Ошибка');
-      });
-  };
+function getData(){
+  return load(RoutUrl.GET_URL);
 }
 
-export {makeGetRequest, makePostRequest};
+function postData(body){
+  return load(RoutUrl.POST_URL, Methods.POST, body);
+}
+
+
+export { getData, postData};
 

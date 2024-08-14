@@ -1,12 +1,12 @@
 import { closePopup, openPopup } from './utils';
-import { VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer, POST_URL } from './const';
+import { isInputFocused, VALID_REG_EXP, ValidErrorText, MAX_HASHTAG_COUNT, MAX_TEXT_SYMBOL_COUNT, uploadPostForm, hashtagInput, descriptionInput, uploadPostPopup, appContainer } from './const';
 import { resetScale } from './scale';
 import { resetSlider } from './effects';
-import { makePostRequest } from './service';
 import { onErrorPostForm } from './errors';
+import { showUploadImage } from './imageUpload';
+import { postData } from './service';
 
-
-const submitButton = uploadPostPopup.querySelector('.img-upload__submit');
+const submitFormButton = uploadPostPopup.querySelector('.img-upload__submit');
 const closeFormButton = uploadPostPopup.querySelector('.img-upload__cancel');
 
 
@@ -15,6 +15,11 @@ const pristine = new Pristine(uploadPostForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error'
 });
+
+const setSubmitButtonDisabled = (isDisabled) => {
+  submitFormButton.disabled = isDisabled;
+  submitFormButton.textContent = isDisabled ? 'Отправляю...' : 'Опубликовать';
+};
 
 function normalizeTags(tagsString){
   return tagsString.trim().split(' ').filter((tag) => Boolean(tag.length));
@@ -70,14 +75,6 @@ pristine.addValidator(
   true
 );
 
-/* Функция блокирует кнопку отправки формы при наличии ошибок валидации */
-function disableSubmitButton() {
-  if(pristine.getErrors().length){
-    submitButton.disabled = true;
-  } else {
-    submitButton.disabled = false;
-  }
-}
 
 function successMessageButtonHandler(element){
   return function() {
@@ -87,9 +84,9 @@ function successMessageButtonHandler(element){
 
 function documentClickHandler(element) {
   return function(evt) {
-    if(!evt.currentTarget.classList.contains('success')){
+    if(!evt.target.classList.contains('success__inner')){
       element.remove();
-      document.removeEventListener('click',documentClickHandler(element));
+      appContainer.removeEventListener('click',documentClickHandler(element));
     }
   };
 }
@@ -126,27 +123,40 @@ function closeForm(){
   closePopup(uploadPostPopup);
 }
 
-/* При успешной отправки формы на сервер, обнулит форму и пристин и закроет форму */
-function onSuccessPostForm() {
+/* При успешной отправки формы на сервер, обнулит форму и закроет форму */
+function onSuccessPostUploadForm() {
   closeForm();
   getSuccessMessage();
 }
 
+function keydownCloseUploadFormHandler(evt){
+  if(evt.key === 'Escape' && !isInputFocused()){
+    closeForm();
+    document.removeEventListener('keydown', keydownCloseUploadFormHandler);
+  }
+}
 
-uploadPostForm.addEventListener('change', () => {
+function openUploadForm(){
+  showUploadImage();
+  document.addEventListener('keydown', keydownCloseUploadFormHandler);
   openPopup(uploadPostPopup);
-  pristine.validate();
-  disableSubmitButton();
-});
+}
+
+uploadPostForm.addEventListener('change', openUploadForm);
 
 uploadPostForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  const formData = new FormData(evt.target);
-
-  const postRequest = makePostRequest(POST_URL, onSuccessPostForm, onErrorPostForm, formData);
-
-  postRequest();
+  if(pristine.validate()){
+    const formData = new FormData(uploadPostForm);
+    setSubmitButtonDisabled(true);
+    postData(formData)
+      .then(() => {
+        onSuccessPostUploadForm();
+      })
+      .catch(() => onErrorPostForm())
+      .finally(() => setSubmitButtonDisabled(false));
+  }
 });
 
 function closeFormButtonHandler(){
@@ -154,12 +164,6 @@ function closeFormButtonHandler(){
   closeFormButton.removeEventListener('click', closeFormButtonHandler);
 }
 
-function keydownCloseFormHandler(evt){
-  if(evt.key === 'Escape'){
-    closeForm();
-    document.removeEventListener('keydown', keydownCloseFormHandler);
-  }
-}
 
 closeFormButton.addEventListener('click', closeFormButtonHandler);
-document.addEventListener('keydown', keydownCloseFormHandler);
+
