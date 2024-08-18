@@ -7,10 +7,11 @@ const userPostsTemplate = document.querySelector('#picture').content.querySelect
 
 function createMiniaturePosts(element, template, container){
   const templateClone = template.cloneNode(true);
+  const templateCloneImage = templateClone.querySelector('.picture__img');
 
-  templateClone.querySelector('.picture__img').id = element.id;
-  templateClone.querySelector('.picture__img').src = element.url;
-  templateClone.querySelector('.picture__img').alt = element.description;
+  templateCloneImage.id = element.id;
+  templateCloneImage.src = element.url;
+  templateCloneImage.alt = element.description;
   templateClone.querySelector('.picture__comments').textContent = element.comments.length;
   templateClone.querySelector('.picture__likes').textContent = element.likes;
 

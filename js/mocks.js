@@ -1,8 +1,8 @@
 import { getRandomUnicInt, getRandomInt } from './utils';
 import { QUNTITY_POST, QUNTITY_COMMETS, QUNTITY_AVATAR_COMMETS, MAX_ID_COMMENTS, MIN_QUNTITY_LIKES, MAX_QUNTITY_LIKES, COMMENTS_SHOW_COUNT} from './const';
 
-const NAME = ['Андрей', 'Артём', 'Яна', 'Александр', 'Анастасия', 'Катя'];
-const MESSAGE = [
+const NAMES = ['Андрей', 'Артём', 'Яна', 'Александр', 'Анастасия', 'Катя'];
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -11,7 +11,7 @@ const MESSAGE = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-const DESCRIPTION_PHOTOS = [
+const DESCRIPTIONS = [
   'Отличный кадр!',
   'Так проходит вечер...',
   'Посмотрите, какая красота!',
@@ -27,7 +27,7 @@ function getCommentMessage() {
   /* Переключатель определяет будет ли в сообщении одно или два предложения */
   const toggle = getRandomInt(1, 2);
 
-  return toggle === 2 ? `${MESSAGE[getRandomUnicInt(0, MESSAGE.length - 1)()]} ${MESSAGE[getRandomUnicInt(0, MESSAGE.length - 1)()]}` : `${MESSAGE[getRandomUnicInt(0, MESSAGE.length - 1)()]}`;
+  return toggle === 2 ? `${MESSAGES[getRandomUnicInt(0, MESSAGES.length - 1)()]} ${MESSAGES[getRandomUnicInt(0, MESSAGES.length - 1)()]}` : `${MESSAGES[getRandomUnicInt(0, MESSAGES.length - 1)()]}`;
 }
 
 /* Программа генерирует один коментарий */
@@ -36,7 +36,7 @@ function getUserComment() {
     id: unicIdCometn(),
     avatar: `img/avatar-${getRandomInt(1, QUNTITY_AVATAR_COMMETS)}.svg`,
     message: getCommentMessage(),
-    name: NAME[getRandomInt(0, NAME.length - 1)],
+    name: NAMES[getRandomInt(0, NAMES.length - 1)],
   };
 }
 
@@ -48,7 +48,7 @@ function getUserPost() {
   return {
     id: id,
     url: `photos/${id}.jpg`,
-    description: DESCRIPTION_PHOTOS[getRandomInt(0, DESCRIPTION_PHOTOS.length - 1)],
+    description: DESCRIPTIONS[getRandomInt(0, DESCRIPTIONS.length - 1)],
     likes: getRandomInt(MIN_QUNTITY_LIKES, MAX_QUNTITY_LIKES),
     comments: Array.from({length: getRandomInt(COMMENTS_SHOW_COUNT, QUNTITY_COMMETS)}, getUserComment)
   };
