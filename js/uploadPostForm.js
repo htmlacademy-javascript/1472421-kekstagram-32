@@ -130,7 +130,7 @@ function onSuccessPostUploadForm() {
 }
 
 function keydownCloseUploadFormHandler(evt){
-  if(evt.key === 'Escape' && !isInputFocused()){
+  if(evt.key === 'Escape' && !isInputFocused() && !appContainer.querySelector('#error')){
     closeForm();
     document.removeEventListener('keydown', keydownCloseUploadFormHandler);
   }

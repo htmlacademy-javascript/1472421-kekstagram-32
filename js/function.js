@@ -26,7 +26,7 @@ isPalindromHard('Лёша на полке клопа нашёл ');
 
 const filterNumber = (str) => str.split('').filter((char) => char ? /\d/.test(char) : '');
 
-const genNumber = (str) => {
+const getNumber = (str) => {
   if(typeof(str) === 'number'){
     return str;
   }
@@ -34,8 +34,8 @@ const genNumber = (str) => {
   return filterNumber(str).join('') ? +filterNumber(str).join('') : NaN;
 };
 
-genNumber('fwefw 222 dfs 3');
-genNumber(231);
+getNumber('fwefw 222 dfs 3');
+getNumber(231);
 
 /* Принимает время преобразуя его в объект со свойствами часы и минуты */
 function getTimeObj(inputTime){

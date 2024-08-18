@@ -64,7 +64,7 @@ const COUNT_SHOW_RANDOM_POSTS = 10;
 
 const RANDOMNESS_LEVEL = 200;
 
-const FILE_TYPES = ['jpeg', 'jpg', 'png'];
+const TYPES = ['jpeg', 'jpg', 'png'];
 
 const isInputFocused = () => document.activeElement === hashtagInput || document.activeElement === descriptionInput;
 
@@ -101,6 +101,6 @@ export {
   RoutUrl,
   Methods,
   TIMEOUT_DELAY,
-  FILE_TYPES,
+  TYPES,
   isInputFocused
 };
